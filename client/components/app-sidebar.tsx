@@ -8,25 +8,31 @@ import {
   Command,
   Frame,
   GalleryVerticalEnd,
+  LayoutDashboard,
   Map,
   PieChart,
   SquareTerminal,
 } from "lucide-react";
 
 import { NavMain } from "@/components/nav-main";
-import { NavUser } from "@/components/nav-user";
 // import { TeamSwitcher } from "@/components/team-switcher";
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
+  SidebarGroup,
+  SidebarGroupContent,
   SidebarHeader,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar";
 import { BiSolidReport } from "react-icons/bi";
 import { GrResources } from "react-icons/gr";
 import { FaUserCircle } from "react-icons/fa";
 import { FcSupport } from "react-icons/fc";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 // This is sample data.
 const data = {
@@ -57,7 +63,7 @@ const data = {
       title: "Modules",
       url: "#",
       icon: SquareTerminal,
-      isActive: true,
+      isActive: false,
       items: [
         { title: "Cloud Forensics", url: "/modules/cloud-forensics" },
         {
@@ -74,6 +80,7 @@ const data = {
       title: "Lab Environment",
       url: "/lab-environment",
       icon: Bot,
+      isActive: false,
       items: [
         {
           title: "VM Configuration",
@@ -91,6 +98,7 @@ const data = {
       title: "Quizzes",
       url: "/quizzes",
       icon: BookOpen,
+      isActive: false,
       items: [
         { title: "Module-Specific Quizzes", url: "/quizzes/module-specific" },
         {
@@ -103,6 +111,7 @@ const data = {
       title: "Reports",
       url: "/reports",
       icon: BiSolidReport,
+      isActive: false,
       items: [
         { title: "Generate Report", url: "/reports/generate" },
         { title: "View Past Reports", url: "/reports/past" },
@@ -113,6 +122,7 @@ const data = {
       title: "Resources",
       url: "/resources",
       icon: GrResources,
+      isActive: false,
       items: [
         { title: "Documentation", url: "/resources/documentation" },
         { title: "Guides & Tutorials", url: "/resources/guides" },
@@ -123,6 +133,7 @@ const data = {
       title: "Profile",
       url: "/profile",
       icon: FaUserCircle,
+      isActive: false,
       items: [
         { title: "Account Settings", url: "/profile/settings" },
         { title: "Progress Tracking", url: "/profile/progress" },
@@ -133,6 +144,7 @@ const data = {
       title: "Support",
       url: "/support",
       icon: FcSupport,
+      isActive: false,
       items: [
         { title: "FAQs", url: "/support/faqs" },
         { title: "Contact Support", url: "/support/contact" },
@@ -160,16 +172,46 @@ const data = {
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const currentPage = usePathname();
+
+  const Data = {
+    ...data,
+    navMain: data.navMain.map((item) => ({
+      ...item,
+      isActive: currentPage.includes(item?.url || ""),
+      items: item.items?.map((subItem) => ({
+        ...subItem,
+        isActive: currentPage === subItem.url,
+      })),
+    })),
+  };
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>{/* <TeamSwitcher teams={data.teams} /> */}</SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
+        <SidebarGroup>
+          <SidebarGroupContent className="">
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  className="data-[active=true]:bg-card hover:data-[active=false]:bg-[#1c1c1c]/50 text-color1 hover:text-color1 rounded py-5 group-data-[collapsible=icon]:!py-5"
+                  asChild
+                >
+                  <Link href={"/"}>
+                    <LayoutDashboard />
+                    <span>Dashboard</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+        <NavMain items={Data.navMain} />
         {/* <NavProjects projects={data.projects} /> */}
       </SidebarContent>
-      <SidebarFooter>
+      {/* <SidebarFooter>
         <NavUser user={data.user} />
-      </SidebarFooter>
+      </SidebarFooter> */}
       <SidebarRail />
     </Sidebar>
   );
