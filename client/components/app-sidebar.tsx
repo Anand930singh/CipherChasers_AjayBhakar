@@ -81,10 +81,6 @@ const data = {
           url: "/modules/expert",
         },
         {
-          title: "Cryptocurrency Analysis",
-          url: "/modules/cryptocurrency-analysis",
-        },
-        {
           title: "Hands-on",
           url: "/modules/hands-on",
         },
