@@ -1,11 +1,14 @@
-require('dotenv').config(); 
+// controllers/commandController.js
+require('dotenv').config();
 const { Client } = require('ssh2');
 const fs = require('fs');
+
 const sshConfig = {
   host: process.env.EC2_HOST,
-  username: process.env.EC2_USERNAME, 
-  privateKey: fs.readFileSync(process.env.PRIVATE_KEY_PATH), 
+  username: process.env.EC2_USERNAME,
+  privateKey: fs.readFileSync(process.env.PRIVATE_KEY_PATH),
 };
+
 const executeCommand = async (command) => {
   return new Promise((resolve, reject) => {
     const conn = new Client();
@@ -33,6 +36,7 @@ const executeCommand = async (command) => {
     .on('error', (err) => reject(err));
   });
 };
+
 const runCommand = async (req, res) => {
   const { command } = req.body;
 
@@ -48,4 +52,4 @@ const runCommand = async (req, res) => {
   }
 };
 
-module.exports = { runCommand };
+module.exports = { runCommand };  // Ensure this line is present
