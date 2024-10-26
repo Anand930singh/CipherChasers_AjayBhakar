@@ -60,13 +60,17 @@ const data = {
   navMain: [
     {
       title: "Modules",
-      url: "#",
+      url: "/modules",
       icon: SquareTerminal,
       isActive: false,
       items: [
         {
           title: "Cryptocurrency Analysis",
           url: "/modules/cryptocurrency-analysis",
+        },
+        {
+          title: "Hands-on",
+          url: "/modules/hands-on",
         },
       ],
     },
