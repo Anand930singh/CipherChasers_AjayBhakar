@@ -20,7 +20,7 @@ function Page() {
             const prompt = `
         Code: 
         ${editorContent},
-        Analyze the give solidity code and find vulnerabilities and displayed vulnerabilities in  HTML and inline CSS. I need HTML code only no any other text.
+        Analyze the give solidity code and find vulnerabilities and displayed vulnerabilities in  HTML and inline CSS. I need HTML code only no any other text and make the UI asthetically pleasing.
       `;
             const response = await fetch('/api/gemini', {
                 method: 'POST',
@@ -35,8 +35,9 @@ function Page() {
 
             const data = await response.json();
             const cleanedOutput = data.output
-            .replace(/^html/, '') // Remove 'html' if it's at the beginning
-            .replace(/```/g, '');            
+            .replace(/```html/g, '')  // Remove the ```html at the start
+            .replace(/```/g, '');     // Remove remaining ```
+                  
             console.log(cleanedOutput);
             setResponse(cleanedOutput);
         } catch (error) {
