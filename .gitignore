@@ -1,3 +1,5 @@
-/node_modules
 .env
+
 Hack2Future.pem
+
+node_modules

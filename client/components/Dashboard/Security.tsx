@@ -15,7 +15,7 @@ export default function Security() {
       <div className="rounded-xl md:col-span-3 md:row-span-3 w-full justify-between shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)] bg-card flex p-8 order-4 md:order-2">
         <div className="flex flex-col justify-end gap-4">
           <ShieldAlert className="text-red-500" />
-          <p className="text-xs">High Risk Projects</p>
+          <p className="text-xs">High Risk Contracts</p>
         </div>
         <div className="h-full flex items-center text-4xl">23</div>
       </div>
@@ -23,14 +23,14 @@ export default function Security() {
       <div className="rounded-xl md:col-span-3 md:row-span-3 w-full justify-between shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)] bg-card flex p-8 order-5 md:order-4">
         <div className="flex flex-col justify-end gap-4">
           <ScanLine className="text-orange-500" />
-          <p className="text-xs">Suspicious Transactions</p>
+          <p className="text-xs">Suspicious Contracts</p>
         </div>
         <div className="h-full flex items-center text-4xl">89</div>
       </div>
       <div className="rounded-xl md:col-span-3 md:row-span-3 w-full justify-between shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)] bg-card flex p-8 order-6 md:order-5">
         <div className="flex flex-col justify-end gap-4">
           <ShieldCheck className="text-green-500" />
-          <p className="text-xs">Verified Projects</p>
+          <p className="text-xs">Verified Contracts</p>
         </div>
         <div className="h-full flex items-center text-4xl">45</div>
       </div>

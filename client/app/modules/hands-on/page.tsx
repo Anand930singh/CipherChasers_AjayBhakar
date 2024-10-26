@@ -93,10 +93,9 @@ function Page() {
         <section className="mt-8">
           <h2 className="text-2xl font-semibold mb-4">Code Editor</h2>
           <div
-            className="editor-container"
+            className="editor-container overflow-hidden border border-border"
             style={{
               height: "400px",
-              border: "1px solid #ccc",
               borderRadius: "4px",
             }}
           >
@@ -110,7 +109,7 @@ function Page() {
           </div>
           <button
             onClick={handleSendCode}
-            className="mt-4 p-2 bg-blue-600 text-white rounded"
+            className="mt-4 p-2 bg-slate-100 hover:bg-slate-50 text-black rounded"
             disabled={loading} // Disable button while loading
           >
             {loading ? "Sending..." : "Send Code"}

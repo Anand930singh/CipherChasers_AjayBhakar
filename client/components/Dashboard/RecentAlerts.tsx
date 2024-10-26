@@ -4,7 +4,7 @@ import React from "react";
 export default function RecentAlerts() {
   return (
     <div className="">
-      <div className="text-2xl mb-4">Recent Alerts</div>
+      <div className="text-2xl mb-4">Suspicious Contract Addresses</div>
       <div className="rounded-xl w-full flex-col gap-3 justify-between flex">
         <div className="shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)] bg-card flex gap-4 items-center w-full p-4 rounded-xl">
           <TriangleAlert className="text-red-500" />
