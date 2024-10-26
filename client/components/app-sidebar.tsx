@@ -64,14 +64,9 @@ const data = {
       icon: SquareTerminal,
       isActive: false,
       items: [
-        { title: "Cloud Forensics", url: "/modules/cloud-forensics" },
         {
           title: "Cryptocurrency Analysis",
           url: "/modules/cryptocurrency-analysis",
-        },
-        {
-          title: "Blockchain Forensics",
-          url: "/modules/blockchain-forensics",
         },
       ],
     },
@@ -104,6 +99,17 @@ const data = {
           title: "General Knowledge Quiz",
           url: "/quizzes/general-knowledge",
         },
+      ],
+    },
+    {
+      title: "Crypto Tool Investigation",
+      url: "/investigate",
+      icon: BiSolidReport,
+      isActive: false,
+      items: [
+        { title: "Type 1", url: "/investigate/type-1" },
+        { title: "Type 2", url: "/investigate/type-1" },
+        { title: "Type 3", url: "/investigate/type-1" },
       ],
     },
     {
@@ -182,7 +188,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <SidebarMenu>
               <SidebarMenuItem>
                 <SidebarMenuButton
-                  className="data-[active=true]:bg-card hover:data-[active=false]:bg-[#1c1c1c]/50 text-color1 hover:text-color1 rounded py-5 group-data-[collapsible=icon]:!py-5"
+                  className="data-[active=true]:bg-card hover:data-[active=false]:text-gray-900 text-primary-text hover:text-text rounded py-5 group-data-[collapsible=icon]:!py-5"
                   asChild
                 >
                   <Link href={"/"}>
