@@ -31,11 +31,16 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           {/* <main className="w-full flex">{children}</main> */}
           <div className="flex rounded-2xl overflow-hidden w-full h-[100dvh] mx-auto relative my-auto">
             <div className="h-full relative w-full overflow-auto">
+              <div className="absolute w-full h-full z-[-1] flex items-center justify-center top-0 left-0 bg-[#020209]">
+                <div className="absolute aspect-square border w-[500px] z-[3] top-0 -translate-y-[70%] rounded-full bg-[#242528]"></div>
+                <div className="absolute aspect-square border w-[700px] z-[2] top-0 -translate-y-[70%] rounded-full bg-[#18181d]"></div>
+                <div className="absolute aspect-square w-[900px] z-[1] top-0 -translate-y-[70%] rounded-full bg-[#0b0a10]"></div>
+              </div>
               <NavbarLogged />
               {children}
             </div>
-            <div className="flex-none hidden xl:block relative w-[300px] border-l h-full">
-              <nav className="sticky z-50 top-0 left-0 w-full border-b h-20 bg-[#111010]/60 flex items-center backdrop-blur px-4">
+            {/* <div className="flex-none bg-card hidden xl:block relative w-[300px] border-l h-full">
+              <nav className="sticky z-50 top-0 left-0 w-full border-b h-20 bg-[#08060e]/90 backdrop-blur flex items-center px-4">
                 <div className="w-full flex justify-end items-center gap-4">
                   <p className="text-sm rounded-full h-12 aspect-square bg-color1" />
                   <div>
@@ -52,7 +57,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   <p className="text-xs text-color1">See all</p>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </SidebarProvider>
       </body>

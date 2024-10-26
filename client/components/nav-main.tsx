@@ -36,7 +36,9 @@ export function NavMain({
 }) {
   return (
     <SidebarGroup>
-      <SidebarGroupLabel className="text-white">Platform</SidebarGroupLabel>
+      <SidebarGroupLabel className="text-primary-text text-lg mb-2">
+        Platform
+      </SidebarGroupLabel>
       <SidebarMenu>
         {items.map((item) => (
           <Collapsible
@@ -48,7 +50,7 @@ export function NavMain({
             <SidebarMenuItem>
               <CollapsibleTrigger asChild>
                 <SidebarMenuButton
-                  className="hover:bg-card text-color1 hover:text-color1"
+                  className="hover:bg-card text-text hover:text-primary-text"
                   tooltip={item.title}
                 >
                   {item.icon && <item.icon />}
@@ -61,7 +63,7 @@ export function NavMain({
                   {item.items?.map((subItem) => (
                     <SidebarMenuSubItem key={subItem.title}>
                       <SidebarMenuSubButton
-                        className="text-color1/50 hover:bg-card hover:text-color1/50"
+                        className="text-text/70 hover:bg-card hover:text-primary-text/70"
                         asChild
                       >
                         <a href={subItem.url}>

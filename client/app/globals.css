@@ -14,7 +14,7 @@ body {
 
 @layer base {
   :root {
-    --background: 0, 3%, 6%;
+    --background: #020209;
     --foreground: 0 0% 98%;
     --card: 0, 0%, 11%;
     --card-foreground: 0 0% 98%;
@@ -38,7 +38,7 @@ body {
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
-    --sidebar-background: 0, 3%, 6%;
+    --sidebar-background: #030106;
     --sidebar-foreground: 240 5.3% 26.1%;
     --sidebar-primary: 240 5.9% 10%;
     --sidebar-primary-foreground: 0 0% 98%;
@@ -92,3 +92,11 @@ body {
     grid-template-rows: repeat(4, minmax(0, 1fr));
   }
 } */
+
+.bg-card {
+  background-image: radial-gradient(125% 125% at 0% 0%, #131218 50%, #08060e);
+}
+
+.bg-sidebar {
+  background-image: radial-gradient(125% 125% at 0% 0%, #131218 50%, #08060e);
+}
