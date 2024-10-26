@@ -17,6 +17,7 @@ export default function Page() {
       difficulty: "Beginner",
       completed: true,
       score: 88,
+      link: "cybersecurity-fundamentals",
     },
     {
       title: "Investigation Methodologies",
@@ -26,6 +27,7 @@ export default function Page() {
       timeLimit: 50,
       difficulty: "Intermediate",
       completed: false,
+      link: "investigation-methodologies",
     },
   ];
 

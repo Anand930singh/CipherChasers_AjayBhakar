@@ -18,6 +18,7 @@ export default function Page() {
       difficulty: "Intermediate",
       completed: true,
       score: 92,
+      link: "cloud-forensics-assessment",
     },
     {
       title: "Cryptocurrency Investigation Quiz",
@@ -31,6 +32,7 @@ export default function Page() {
       timeLimit: 60,
       difficulty: "Advanced",
       completed: false,
+      link: "cryptocurrency-investigation-quiz",
     },
     {
       title: "Blockchain Forensics Examination",
@@ -44,6 +46,7 @@ export default function Page() {
       timeLimit: 40,
       difficulty: "Expert",
       completed: false,
+      link: "blockchain-forensics-examination",
     },
   ];
   return (

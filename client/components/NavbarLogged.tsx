@@ -3,7 +3,7 @@ import { SidebarTrigger } from "./ui/sidebar";
 
 export default function NavbarLogged() {
   return (
-    <nav className="sticky z-50 top-0 left-0 w-full border-b h-20 bg-[#111010]/60 flex items-center backdrop-blur px-4">
+    <nav className="sticky z-50 top-0 left-0 w-full border-b h-20 bg-[#08060e]/50 flex items-center backdrop-blur px-4">
       <div className="w-fit flex gap-6">
         <SidebarTrigger className="" />
         <div className="">

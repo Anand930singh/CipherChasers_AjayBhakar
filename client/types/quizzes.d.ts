@@ -7,4 +7,5 @@ export interface moduleSpecific {
   difficulty: string;
   completed: boolean;
   score?: number;
+  link: string;
 }

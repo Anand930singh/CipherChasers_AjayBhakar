@@ -7,9 +7,10 @@ import {
   XCircle,
   ArrowRight,
 } from "lucide-react";
+import Link from "next/link";
 
 export const QuizCard = ({ quiz }: { quiz: moduleSpecific }) => (
-  <div className="mb-4 p-4 bg-card rounded">
+  <div className="mb-4 p-4 bg-card rounded shadow-main">
     <div className="w-full">
       <div className="flex justify-between items-start">
         <div className="text-slate-200">
@@ -54,20 +55,23 @@ export const QuizCard = ({ quiz }: { quiz: moduleSpecific }) => (
         </div>
 
         {quiz.completed ? (
-          <div className="flex items-center gap-2 text-green-600">
-            <CheckCircle className="w-5 h-5" />
+          <div className="flex items-center text-sm gap-2 text-green-600">
+            <CheckCircle size={16} />
             <span>Score: {quiz.score}%</span>
           </div>
         ) : (
-          <div className="flex justify-between items-center">
+          <div className="flex justify-between text-sm items-center">
             <span className="flex items-center gap-2 text-blue-500">
-              <XCircle className="w-5 h-5" />
+              <XCircle size={16} />
               Not attempted yet
             </span>
-            <button className="flex items-center gap-2 px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors">
+            <Link
+              href={`/test/` + quiz.link}
+              className="flex items-center gap-2 px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+            >
               Start Quiz
               <ArrowRight className="w-4 h-4" />
-            </button>
+            </Link>
           </div>
         )}
       </div>

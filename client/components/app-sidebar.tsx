@@ -30,7 +30,6 @@ import {
 import { BiSolidReport } from "react-icons/bi";
 import { GrResources } from "react-icons/gr";
 import { FaUserCircle } from "react-icons/fa";
-import { FcSupport } from "react-icons/fc";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -138,17 +137,6 @@ const data = {
         { title: "Account Settings", url: "/profile/settings" },
         { title: "Progress Tracking", url: "/profile/progress" },
         { title: "Achievements", url: "/profile/achievements" },
-      ],
-    },
-    {
-      title: "Support",
-      url: "/support",
-      icon: FcSupport,
-      isActive: false,
-      items: [
-        { title: "FAQs", url: "/support/faqs" },
-        { title: "Contact Support", url: "/support/contact" },
-        { title: "Feedback", url: "/support/feedback" },
       ],
     },
   ],
