@@ -4,7 +4,7 @@ import Security from "@/components/Dashboard/Security";
 
 export default function Home() {
   return (
-    <div className="bg-background relative top-0 flex-1 w-full flex flex-col gap-10 h-full px-4 pt-4">
+    <div className="relative top-0 flex-1 w-full flex flex-col gap-10 h-full px-4 pt-4">
       <Security />
       <RunTests />
       <RecentAlerts />

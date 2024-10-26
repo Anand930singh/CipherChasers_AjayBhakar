@@ -27,8 +27,8 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar";
-import { BiSolidReport } from "react-icons/bi";
-import { GrResources } from "react-icons/gr";
+// import { BiSolidReport } from "react-icons/bi";
+// import { GrResources } from "react-icons/gr";
 import { FaUserCircle } from "react-icons/fa";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -89,22 +89,9 @@ const data = {
       ],
     },
     {
-      title: "Quizzes",
-      url: "/quizzes",
-      icon: BookOpen,
-      isActive: false,
-      items: [
-        { title: "Module-Specific Quizzes", url: "/quizzes/module-specific" },
-        {
-          title: "General Knowledge Quiz",
-          url: "/quizzes/general-knowledge",
-        },
-      ],
-    },
-    {
       title: "Crypto Tool Investigation",
       url: "/investigate",
-      icon: BiSolidReport,
+      icon: BookOpen,
       isActive: false,
       items: [
         { title: "Type 1", url: "/investigate/type-1" },
@@ -112,28 +99,28 @@ const data = {
         { title: "Type 3", url: "/investigate/type-1" },
       ],
     },
-    {
-      title: "Reports",
-      url: "/reports",
-      icon: BiSolidReport,
-      isActive: false,
-      items: [
-        { title: "Generate Report", url: "/reports/generate" },
-        { title: "View Past Reports", url: "/reports/past" },
-        { title: "Export Options", url: "/reports/export" },
-      ],
-    },
-    {
-      title: "Resources",
-      url: "/resources",
-      icon: GrResources,
-      isActive: false,
-      items: [
-        { title: "Documentation", url: "/resources/documentation" },
-        { title: "Guides & Tutorials", url: "/resources/guides" },
-        { title: "Useful Tools", url: "/resources/tools" },
-      ],
-    },
+    // {
+    //   title: "Reports",
+    //   url: "/reports",
+    //   icon: BiSolidReport,
+    //   isActive: false,
+    //   items: [
+    //     { title: "Generate Report", url: "/reports/generate" },
+    //     { title: "View Past Reports", url: "/reports/past" },
+    //     { title: "Export Options", url: "/reports/export" },
+    //   ],
+    // },
+    // {
+    //   title: "Resources",
+    //   url: "/resources",
+    //   icon: GrResources,
+    //   isActive: false,
+    //   items: [
+    //     { title: "Documentation", url: "/resources/documentation" },
+    //     { title: "Guides & Tutorials", url: "/resources/guides" },
+    //     { title: "Useful Tools", url: "/resources/tools" },
+    //   ],
+    // },
     {
       title: "Profile",
       url: "/profile",
@@ -201,11 +188,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           </SidebarGroupContent>
         </SidebarGroup>
         <NavMain items={Data.navMain} />
-        {/* <NavProjects projects={data.projects} /> */}
       </SidebarContent>
-      {/* <SidebarFooter>
-        <NavUser user={data.user} />
-      </SidebarFooter> */}
       <SidebarRail />
     </Sidebar>
   );
