@@ -37,7 +37,6 @@ def predict_vulnerability():
     predicted_vulnerability = vulnerability_types.get(predicted_class, "Unknown")
 
     return jsonify({
-        "solidity_code": solidity_code.strip(),
         "predicted_vulnerability": predicted_vulnerability
     })
 
