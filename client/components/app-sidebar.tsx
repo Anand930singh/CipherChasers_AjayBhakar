@@ -60,10 +60,26 @@ const data = {
   navMain: [
     {
       title: "Modules",
-      url: "#",
+      url: "/modules",
       icon: SquareTerminal,
       isActive: false,
       items: [
+        {
+          title: "Beginner",
+          url: "/modules/beginner",
+        },
+        {
+          title: "Intermediate",
+          url: "/modules/intermediate",
+        },
+        {
+          title: "Advanced",
+          url: "/modules/advanced",
+        },
+        {
+          title: "Expert",
+          url: "/modules/expert",
+        },
         {
           title: "Cryptocurrency Analysis",
           url: "/modules/cryptocurrency-analysis",

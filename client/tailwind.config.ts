@@ -9,6 +9,14 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontSize: {
+        h1: "var(--font--h1)",
+        h2: "var(--font--h2)",
+        h3: "var(--font--h3)",
+        h4: "var(--font--h4)",
+        h5: "var(--font--h5)",
+        label: "var(--font--label)",
+      },
       colors: {
         color1: "#9198a1",
         color2: "#817e83",
@@ -17,8 +25,6 @@ const config: Config = {
         background: "var(--background)",
         foreground: "hsl(var(--foreground))",
         card: {
-          // DEFAULT: "linear-gradient(45deg,var(--card),#1c1c20)",
-          //   DEFAULT: "linear-gradient(45deg,#fff,#1c1c20)",
           foreground: "hsl(var(--card-foreground))",
           hover: "#25242a",
         },
@@ -46,8 +52,8 @@ const config: Config = {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
         },
-        border: "#1c1c20",
-        "border-card": "#37363a",
+        border: "#94a3b820",
+        "border-card": "#303130",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         chart: {
@@ -58,7 +64,7 @@ const config: Config = {
           "5": "hsl(var(--chart-5))",
         },
         sidebar: {
-          //   DEFAULT: "var(--sidebar-background)",
+          DEFAULT: "var(--sidebar-background)",
           foreground: "hsl(var(--sidebar-foreground))",
           primary: "hsl(var(--sidebar-primary))",
           "primary-foreground": "hsl(var(--sidebar-primary-foreground))",
@@ -66,8 +72,6 @@ const config: Config = {
           "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
-          "primary-foreground": "hsl(var(--sidebar-primary-foreground))",
-          "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
         },
       },
       borderRadius: {
@@ -77,6 +81,28 @@ const config: Config = {
       },
       boxShadow: {
         main: "inset 0 1px 0 0 rgba(148,163,184,0.1)",
+      },
+      keyframes: {
+        "accordion-down": {
+          from: {
+            height: "0",
+          },
+          to: {
+            height: "var(--radix-accordion-content-height)",
+          },
+        },
+        "accordion-up": {
+          from: {
+            height: "var(--radix-accordion-content-height)",
+          },
+          to: {
+            height: "0",
+          },
+        },
+      },
+      animation: {
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
       },
     },
   },

@@ -1,6 +1,6 @@
 "use client";
 
-import type { Metadata } from "next";
+// import type { Metadata } from "next";
 import "./globals.css";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import NavbarLogged from "@/components/NavbarLogged";
@@ -14,7 +14,7 @@ import Particles from "@/components/ui/particles";
 // };
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  const [logged, setLogged] = useState(false);
+  const [logged, setLogged] = useState(true);
   return (
     <html>
       <body>
@@ -24,11 +24,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             {/* <main className="w-full flex">{children}</main> */}
             <div className="flex rounded-2xl overflow-hidden w-full h-[100dvh] mx-auto relative my-auto">
               <div className="h-full relative w-full overflow-auto">
-                <div className="absolute w-full h-full z-[-1] flex items-center justify-center top-0 left-0 bg-[#020209]">
+                <div className="fixed w-full h-full z-[-1] flex items-center justify-center top-0 left-0 bg-[#020209]">
                   <div className="absolute aspect-square border w-[500px] z-[3] top-0 -translate-y-[70%] rounded-full bg-[#242528]"></div>
                   <div className="absolute aspect-square border w-[700px] z-[2] top-0 -translate-y-[70%] rounded-full bg-[#18181d]"></div>
                   <div className="absolute aspect-square w-[900px] z-[1] top-0 -translate-y-[70%] rounded-full bg-[#0b0a10]"></div>
                 </div>
+                {/* <div className="fixed inset-0 h-full w-full gridblock"></div> */}
                 <NavbarLogged />
                 {children}
               </div>
