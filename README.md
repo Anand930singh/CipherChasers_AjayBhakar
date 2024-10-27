@@ -84,26 +84,27 @@ Our platform provides an interactive learning experience combining theoretical k
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/your-org/blockchain-security-platform.git
-cd blockchain-security-platform
+git clone https://github.com/Hack2Future-IIIT-Dharwad/CipherChasers_AjayBhakar.git
+cd CipherChasers_AjayBhakar
 ```
 
 2. Install dependencies:
 
 ```bash
+cd client
 npm install
 ```
 
-3. Set up environment variables:
+3. Start the development server:
 
 ```bash
-cp .env.example .env
-# Fill in your environment variables
+npm run dev
 ```
 
-4. Start the development server:
+3. Start the development backend server:
 
 ```bash
+cd ../server
 npm run dev
 ```
 
@@ -135,14 +136,6 @@ contract CertificationSystem {
 }
 ```
 
-## 🔒 Security Considerations
-
-- Multi-signature certificate approval
-- Tamper-proof certificate storage
-- Secure VM environments
-- Regular security audits
-- Protected admin functions
-
 ## 📊 Assessment Criteria
 
 | Module                  | Passing Score | Requirements           |
@@ -151,40 +144,12 @@ contract CertificationSystem {
 | Lab Environment         | Pass/Fail     | Setup completion       |
 | Crypto Scams            | 85%           | Quiz completion        |
 
-## 🤝 Contributing
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+## Technologies Used
+- Next.js
+- Node.js
+- TailwindCSS
+- Solidity
+- Python
+- AWS (EC2)
 
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🤝 Support
-
-For support, email support@blockchainplatform.com or join our Discord community.
-
-## 🗺️ Roadmap
-
-- [x] Basic module structure
-- [x] Smart contract integration
-- [ ] Advanced lab environments
-- [ ] Mobile application
-- [ ] Multi-language support
-- [ ] Community forums
-- [ ] Peer review system
-- [ ] Advanced analytics dashboard
-
-## 🔗 Useful Links
-
-- [Documentation](https://docs.blockchainplatform.com)
-- [API Reference](https://api.blockchainplatform.com)
-- [Community Forum](https://community.blockchainplatform.com)
-- [Tutorial Videos](https://www.youtube.com/c/blockchainplatform)
-
-## ⚠️ Disclaimer
-
-This platform is for educational purposes only. Always conduct thorough research and due diligence before interacting with any blockchain systems or smart contracts.
