@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   Card,
   CardContent,
@@ -7,38 +7,12 @@ import {
   CardHeader,
   CardTitle,
 } from "../../../components/ui/card";
-import {
-  AlertTriangle,
-  ArrowUpRight,
-  BookOpen,
-  BrainCircuit,
-  Code,
-  GraduationCap,
-  Info,
-  PlayCircle,
-  Server,
-  Shield,
-  TrendingUp,
-} from "lucide-react";
+import { Code, PlayCircle, Server, Shield } from "lucide-react";
 // import ScrollReveal from "../ScrollReveal";
 // import Header from "../Header";
 
-import {
-  LineChart,
-  Line,
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from "recharts";
-import GuideLineComponent from "@/components/GuideLine/GuideLineComponent";
 import Timeline from "@/components/modules/Timeline";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { RadioGroup } from "@radix-ui/react-dropdown-menu";
 import { Badge } from "@/components/ui/badge";
 import { quizData } from "@/data/quizData";
 import Test from "@/components/modules/Test";

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useState } from "react";
-import { Award, CheckCircle2, Download, XCircle } from "lucide-react";
+import { Award, CheckCircle2, XCircle } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -13,7 +13,16 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 // import MintButton from "./MintButton";
 
-export default function Test(props) {
+export default function Test(props: {
+  level: string;
+  questions: {
+    id: number;
+    question: string;
+    options: string[];
+    correctAnswer: string | number; // Set correctAnswer to number type
+    explanation: string;
+  }[];
+}) {
   const [selectedAnswers, setSelectedAnswers] = useState<
     Record<number, number | undefined>
   >({});
@@ -62,22 +71,20 @@ export default function Test(props) {
     setShowCertificate(true);
   };
 
-  const downloadCertificate = () => {
-    if (certificateRef.current) {
-      // In a real application, you'd want to use a library like html2canvas or similar
-      // to properly generate a PDF or image file. This is a simplified example.
-      const certificateContent = certificateRef.current.innerText;
-      const blob = new Blob([certificateContent], { type: "text/plain" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `${userName.replace(/\s+/g, "_")}_certificate.txt`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    }
-  };
+  // const downloadCertificate = () => {
+  //   if (certificateRef.current) {
+  //     const certificateContent = certificateRef.current.innerText;
+  //     const blob = new Blob([certificateContent], { type: "text/plain" });
+  //     const url = URL.createObjectURL(blob);
+  //     const a = document.createElement("a");
+  //     a.href = url;
+  //     a.download = `${userName.replace(/\s+/g, "_")}_certificate.txt`;
+  //     document.body.appendChild(a);
+  //     a.click();
+  //     document.body.removeChild(a);
+  //     URL.revokeObjectURL(url);
+  //   }
+  // };
 
   const score = getScoreCount();
   const percentage = Math.round((score / props.questions.length) * 100);
@@ -91,20 +98,16 @@ export default function Test(props) {
         <div className="text-4xl font-serif mb-8">
           Certificate of Completion
         </div>
-
         <div className="text-xl">This is to certify that</div>
         <div className="text-3xl font-bold text-blue-600 my-4">{userName}</div>
-
         <div className="text-xl">has successfully completed the</div>
         <div className="text-2xl font-bold my-4">
-          {props.title || "Assessment Test"}
+          {props.level || "Assessment Test"}
         </div>
-
         <div className="text-xl">with a score of</div>
         <div className="text-3xl font-bold text-green-600 my-4">
           {score} out of {props.questions.length} ({percentage}%)
         </div>
-
         <div className="mt-16 pt-8 border-t border-gray-300">
           <div className="text-sm text-gray-600">
             Date: {new Date().toLocaleDateString()}
@@ -127,7 +130,6 @@ export default function Test(props) {
                     {question.question}
                   </div>
                 </div>
-
                 <div className="space-y-3 text-text pl-12">
                   {question.options.map((option, optionIndex) => {
                     const status = getAnswerStatus(questionIndex, optionIndex);
@@ -190,7 +192,6 @@ export default function Test(props) {
                     );
                   })}
                 </div>
-
                 {submitted && question.explanation && (
                   <div className="mt-4 pl-12 p-4 bg-blue-50 border border-blue-200 rounded text-blue-800">
                     <strong>Explanation:</strong> {question.explanation}
@@ -201,7 +202,6 @@ export default function Test(props) {
           </div>
         ))}
       </div>
-
       <div className="sticky bottom-0 bg-[#08060e]/90 backdrop-blur border-t z-[60] p-4 shadow-md">
         <div className="flex justify-between items-center">
           <div>
@@ -239,21 +239,17 @@ export default function Test(props) {
             const isCorrect =
               submitted &&
               selectedAnswers[index] === props.questions[index].correctAnswer;
-
             return (
               <div
                 key={index}
-                className={`w-8 h-8 flex border rounded items-center justify-center
-                  ${
-                    !submitted
-                      ? isAnswered
-                        ? "bg-primary border-blue-300"
-                        : ""
-                      : isCorrect
-                      ? "bg-green-100 border-green-500 text-green-500"
-                      : "bg-red-100 border-red-500 text-red-500"
-                  }
-                `}
+                className={`w-8 h-8 flex items-center justify-center rounded-full 
+                ${
+                  isAnswered
+                    ? isCorrect
+                      ? "bg-green-500"
+                      : "bg-red-500"
+                    : "bg-gray-200"
+                }`}
               >
                 {index + 1}
               </div>
@@ -264,51 +260,21 @@ export default function Test(props) {
       <Dialog open={showNameDialog} onOpenChange={setShowNameDialog}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Enter Your Name for the Certificate</DialogTitle>
+            <DialogTitle>Enter Your Name</DialogTitle>
           </DialogHeader>
-          <div className="py-4">
-            <Input
-              placeholder="Enter your full name"
-              value={userName}
-              onChange={(e) => setUserName(e.target.value)}
-            />
-          </div>
+          <Input
+            placeholder="Enter your name"
+            value={userName}
+            onChange={(e) => setUserName(e.target.value)}
+          />
           <DialogFooter>
-            <Button
-              onClick={handleCertificateGeneration}
-              disabled={!userName.trim()}
-              className="bg-slate-100 hover:bg-slate-50 rounded"
-            >
+            <Button onClick={handleCertificateGeneration}>
               Generate Certificate
             </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
-
-      {/* Certificate Display */}
-      {showCertificate && (
-        <Dialog open={showCertificate} onOpenChange={setShowCertificate}>
-          <DialogContent className="max-w-4xl">
-            <DialogHeader>
-              <DialogTitle>Your Certificate</DialogTitle>
-            </DialogHeader>
-            <Certificate />
-            <DialogFooter className="w-full !justify-between flex">
-              {/* <Button className="flex items-center gap-2 bg-blue-500 hover:bg-blue-400 text-white rounded">
-                Mint Certificate
-              </Button> */}
-              {/* <MintButton /> */}
-              <Button
-                onClick={downloadCertificate}
-                className="flex items-center gap-2 bg-slate-100 hover:bg-slate-50 rounded"
-              >
-                <Download className="w-4 h-4" />
-                Download Certificate
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
-      )}
+      {showCertificate && <Certificate />}
     </div>
   );
 }

@@ -252,11 +252,11 @@ export default function Page() {
                 Rug pull scams have become a prevalent issue in the world of
                 cryptocurrencies and NFTs, where project creators suddenly
                 withdraw all funds, leaving investors with worthless assets.
-                These scams target investors' trust in new, promising projects,
-                which often involve substantial investments due to hype and FOMO
-                (fear of missing out). In this analysis, we explore common
-                characteristics of rug pull scams, focusing on both
-                cryptocurrency and NFT cases, drawing insights from notable
+                These scams target investors&apos; trust in new, promising
+                projects, which often involve substantial investments due to
+                hype and FOMO (fear of missing out). In this analysis, we
+                explore common characteristics of rug pull scams, focusing on
+                both cryptocurrency and NFT cases, drawing insights from notable
                 incidents and the financial impact on victims.
               </CardContent>
             </Card>

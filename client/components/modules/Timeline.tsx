@@ -1,6 +1,5 @@
 import React from "react";
 import GuideLineComponent from "../GuideLine/GuideLineComponent";
-import { Card, CardHeader } from "../ui/card";
 import { modules } from "@/types/modules";
 
 export default function Timeline(props: modules) {

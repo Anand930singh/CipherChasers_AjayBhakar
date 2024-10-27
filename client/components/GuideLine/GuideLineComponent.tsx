@@ -2,7 +2,11 @@
 import React from "react";
 // import Reveal from "../Reveal";
 
-export default function GuideLineComponent(props) {
+export default function GuideLineComponent(props: {
+  heading: string;
+  content: React.ReactNode;
+  time?: string;
+}) {
   return (
     <div className="grid relative w-full grid-cols-[80px_1fr] md:grid-cols-[100px_1fr]">
       <div className="w-full flex justify-center">

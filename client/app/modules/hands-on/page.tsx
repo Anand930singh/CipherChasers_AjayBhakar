@@ -2,8 +2,6 @@
 
 import React, { useState } from "react";
 import dynamic from "next/dynamic";
-import axios from "axios"; // Not currently used but can be useful for other API calls
-import { GoogleGenerativeAI } from "@google/generative-ai"; // Not used in this context
 
 // Dynamically import the Monaco Editor to avoid SSR issues
 const MonacoEditor = dynamic(() => import("@monaco-editor/react"), {
@@ -11,7 +9,7 @@ const MonacoEditor = dynamic(() => import("@monaco-editor/react"), {
 });
 
 function Page() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  // const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [editorContent, setEditorContent] = useState(
     "// Start typing your Solidity code here"
   );
@@ -55,9 +53,7 @@ function Page() {
   return (
     <div className="flex min-h-screen">
       <main
-        className={`flex-1 p-6 transition-all duration-300 ease-in-out ${
-          !isSidebarOpen ? "md:mr-0" : "md:mr-[300px]"
-        }`}
+        className={`flex-1 p-6 transition-all duration-300 ease-in-out md:mr-0`}
       >
         <div className="md:hidden flex justify-end mb-4">
           {/* Uncomment if you have a Button component */}

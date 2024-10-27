@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { Plus, Play, Loader2, Trash2 } from "lucide-react";
 import { Card } from "@/components/ui/card";
+import DemoCode from "@/components/AWS/DemoCode";
 
 function Terminal({
   id,
@@ -14,7 +15,7 @@ function Terminal({
   const [command, setCommand] = useState("");
   const [result, setResult] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [height, setHeight] = useState("100px");
+  // const [height, setHeight] = useState("100px");
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -86,7 +87,7 @@ function Terminal({
       <textarea
         value={command}
         onChange={handleInputChange}
-        style={{ height }}
+        style={{ height: "100px" }}
         onKeyDown={handleKeyDown} // Attach the new handler here
         className="w-full bg-transparent p-4 focus:outline-none resize-none font-mono"
         placeholder="Type your command here..."
@@ -121,6 +122,8 @@ function Page() {
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Code Terminal</h1>
       </div>
+
+      <DemoCode />
 
       <div className="space-y-4">
         {terminals.map((terminal) => (
