@@ -27,6 +27,7 @@ import {
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import DiffViewer from "@/components/GuideLine/DiffViewer";
 import Test from "@/components/modules/Test";
+import { CryptoScamAnalysis } from "@/components/investigation/CryptoScamAnalysis";
 export default function Page() {
   const [isClient, setIsClient] = useState(false);
 
@@ -230,7 +231,7 @@ export default function Page() {
 
         <div className="">for safeguarding digital assets.</div>
       </div>
-      <div className=""></div>
+      <CryptoScamAnalysis />
 
       <div className="relative flex flex-col items-left z-[10] justify-center w-full">
         <div className="absolute z-[-2] w-[3px] left-[40px] md:left-[50px] [mask:linear-gradient(0deg,transparent,white_20%,white_80%,transparent)] h-full bg-[_theme(colors.slate.900/.88)]">

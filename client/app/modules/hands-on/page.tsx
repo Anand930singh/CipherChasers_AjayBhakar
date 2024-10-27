@@ -2,27 +2,126 @@
 
 import React, { useState } from "react";
 import dynamic from "next/dynamic";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Badge } from "@/components/ui/badge";
+import { AlertTriangle, Bug, Lock, Shield, Code2 } from "lucide-react";
 
 // Dynamically import the Monaco Editor to avoid SSR issues
 const MonacoEditor = dynamic(() => import("@monaco-editor/react"), {
   ssr: false,
 });
 
+const vulnerableCodeExamples = [
+  {
+    id: "reentrancy",
+    title: "Reentrancy Vulnerability",
+    description:
+      "A classic vulnerability that allows multiple withdrawals before balance update",
+    code: `contract VulnerableBank {
+    mapping(address => uint) public balances;
+
+    function withdraw(uint _amount) public {
+        require(balances[msg.sender] >= _amount);
+        
+        // Vulnerable: State change after external call
+        (bool sent, ) = msg.sender.call{value: _amount}("");
+        require(sent, "Failed to send Ether");
+        
+        balances[msg.sender] -= _amount;
+    }
+}`,
+    risk: "Critical",
+    impact: "Potential drain of all contract funds",
+    fix: `contract SecureBank {
+    mapping(address => uint) public balances;
+
+    function withdraw(uint _amount) public {
+        require(balances[msg.sender] >= _amount);
+        
+        balances[msg.sender] -= _amount;
+        
+        (bool sent, ) = msg.sender.call{value: _amount}("");
+        require(sent, "Failed to send Ether");
+    }
+}`,
+  },
+  {
+    id: "overflow",
+    title: "Integer Overflow",
+    description: "Arithmetic operations without SafeMath can lead to overflows",
+    code: `contract VulnerableToken {
+    mapping(address => uint256) public balances;
+
+    function transfer(address to, uint256 amount) public {
+        // Vulnerable: No overflow check
+        balances[msg.sender] -= amount;
+        balances[to] += amount;
+    }
+}`,
+    risk: "High",
+    impact: "Manipulation of token balances",
+    fix: `contract SecureToken {
+    using SafeMath for uint256;
+    mapping(address => uint256) public balances;
+
+    function transfer(address to, uint256 amount) public {
+        balances[msg.sender] = balances[msg.sender].sub(amount);
+        balances[to] = balances[to].add(amount);
+    }
+}`,
+  },
+  {
+    id: "access",
+    title: "Access Control",
+    description: "Missing or improper access controls on critical functions",
+    code: `contract VulnerableContract {
+    address public owner;
+    
+    function changeOwner(address newOwner) public {
+        // Vulnerable: No access control
+        owner = newOwner;
+    }
+}`,
+    risk: "High",
+    impact: "Unauthorized control of contract",
+    fix: `contract SecureContract {
+    address public owner;
+    
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Not owner");
+        _;
+    }
+    
+    function changeOwner(address newOwner) public onlyOwner {
+        owner = newOwner;
+    }
+}`,
+  },
+];
+
 function Page() {
-  // const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [editorContent, setEditorContent] = useState(
     "// Start typing your Solidity code here"
   );
-  const [response, setResponse] = useState(""); // State to store the response from the backend
-  const [loading, setLoading] = useState(false); // State to handle loading status
+  const [response, setResponse] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [selectedExample, setSelectedExample] = useState(null);
 
   const handleSendCode = async () => {
-    setLoading(true); // Set loading to true while waiting for response
+    setLoading(true);
     try {
       const prompt = `
         Code: 
         ${editorContent},
-        Analyze the give solidity code and find vulnerabilities and displayed vulnerabilities in  HTML and inline CSS. I need HTML code only no any other text and make the UI asthetically pleasing and remember black is used as backgrond in UI .
+        Analyze the give solidity code and find vulnerabilities and displayed vulnerabilities in HTML and inline CSS. I need HTML code only no any other text and make the UI asthetically pleasing and remember black is used as backgrond in UI.
       `;
       const response = await fetch("/api/gemini", {
         method: "POST",
@@ -32,94 +131,182 @@ function Page() {
         body: JSON.stringify({ body: prompt }),
       });
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`); // Handle non-200 responses
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
 
       const data = await response.json();
       const cleanedOutput = data.output
-        .replace(/```html/g, "") // Remove the ```html at the start
-        .replace(/```/g, ""); // Remove remaining ```
+        .replace(/```html/g, "")
+        .replace(/```/g, "");
 
-      console.log(cleanedOutput);
       setResponse(cleanedOutput);
     } catch (error) {
       console.error("Error sending code:", error);
       setResponse("Error: Unable to fetch response.");
     } finally {
-      setLoading(false); // Reset loading status
+      setLoading(false);
     }
+  };
+
+  const loadExample = (example) => {
+    setSelectedExample(example);
+    setEditorContent(example.code);
   };
 
   return (
     <div className="flex min-h-screen">
-      <main
-        className={`flex-1 p-6 transition-all duration-300 ease-in-out md:mr-0`}
-      >
-        <div className="md:hidden flex justify-end mb-4">
-          {/* Uncomment if you have a Button component */}
-          {/* <Button variant="outline" size="icon" onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
-            <Menu className="h-6 w-6" />
-          </Button> */}
-        </div>
-        <div className="hidden md:flex justify-end mb-4">
-          {/* Uncomment if you have a Button component */}
-          {/* <Button
-            variant="outline"
-            size="icon"
-            onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-            className="fixed right-4 top-4 z-20"
-          >
-            {isSidebarOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-          </Button> */}
-        </div>
-
+      <main className="flex-1 p-6 transition-all duration-300 ease-in-out md:mr-0">
         {/* Hero Section */}
         <section className="mb-8">
           <h1 className="text-3xl font-bold mb-4">
-            Welcome to the Cryptocurrency Learning Platform
+            Smart Contract Vulnerability Scanner
           </h1>
           <p className="text-lg mb-4">
-            This platform is designed to provide comprehensive learning
-            resources about cryptocurrency, blockchain technology, and trading
-            strategies.
+            Learn about common smart contract vulnerabilities through examples
+            and analyze your own code.
           </p>
+        </section>
+
+        {/* Vulnerable Code Examples Section */}
+        <section className="mb-8">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Bug className="h-6 w-6 text-red-500" />
+                Common Vulnerabilities
+              </CardTitle>
+              <CardDescription>
+                Study these examples to understand common smart contract
+                vulnerabilities
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Tabs defaultValue="reentrancy" className="w-full">
+                <TabsList className="grid w-full grid-cols-3">
+                  {vulnerableCodeExamples.map((example) => (
+                    <TabsTrigger key={example.id} value={example.id}>
+                      {example.title}
+                    </TabsTrigger>
+                  ))}
+                </TabsList>
+
+                {vulnerableCodeExamples.map((example) => (
+                  <TabsContent key={example.id} value={example.id}>
+                    <Card>
+                      <CardHeader>
+                        <div className="flex items-center justify-between">
+                          <CardTitle>{example.title}</CardTitle>
+                          <Badge variant="destructive">{example.risk}</Badge>
+                        </div>
+                        <CardDescription>{example.description}</CardDescription>
+                      </CardHeader>
+                      <CardContent className="space-y-4">
+                        <Alert variant="destructive">
+                          <AlertTriangle className="h-4 w-4" />
+                          <AlertTitle>Impact</AlertTitle>
+                          <AlertDescription>{example.impact}</AlertDescription>
+                        </Alert>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <Card className="p-4">
+                            <h3 className="text-lg font-semibold mb-2 flex items-center gap-2">
+                              <Bug className="h-5 w-5 text-red-500" />
+                              Vulnerable Code
+                            </h3>
+                            <pre className="bg-background border p-4 rounded overflow-x-auto">
+                              <code className="text-sm text-slate-50">
+                                {example.code}
+                              </code>
+                            </pre>
+                          </Card>
+
+                          <Card className="p-4">
+                            <h3 className="text-lg font-semibold mb-2 flex items-center gap-2">
+                              <Shield className="h-5 w-5 text-green-500" />
+                              Secure Code
+                            </h3>
+                            <pre className="bg-background border p-4 rounded overflow-x-auto">
+                              <code className="text-sm text-slate-50">
+                                {example.fix}
+                              </code>
+                            </pre>
+                          </Card>
+                        </div>
+
+                        <button
+                          onClick={() => loadExample(example)}
+                          className="w-full p-2 bg-slate-100 hover:bg-slate-50 text-black rounded flex items-center justify-center gap-2"
+                        >
+                          <Code2 className="h-4 w-4" />
+                          Load in Editor
+                        </button>
+                      </CardContent>
+                    </Card>
+                  </TabsContent>
+                ))}
+              </Tabs>
+            </CardContent>
+          </Card>
         </section>
 
         {/* Monaco Editor Section */}
         <section className="mt-8">
-          <h2 className="text-2xl font-semibold mb-4">Code Editor</h2>
-          <div
-            className="editor-container overflow-hidden border border-border"
-            style={{
-              height: "400px",
-              borderRadius: "4px",
-            }}
-          >
-            <MonacoEditor
-              height="400px"
-              defaultLanguage="solidity" // Change language to Solidity
-              theme="vs-dark"
-              value={editorContent}
-              onChange={(value) => setEditorContent(value || "")}
-            />
-          </div>
-          <button
-            onClick={handleSendCode}
-            className="mt-4 p-2 bg-slate-100 hover:bg-slate-50 text-black rounded"
-            disabled={loading} // Disable button while loading
-          >
-            {loading ? "Sending..." : "Send Code"}
-          </button>
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Lock className="h-6 w-6 text-blue-500" />
+                Code Analysis
+              </CardTitle>
+              <CardDescription>
+                Paste your Solidity code or use an example from above to analyze
+                for vulnerabilities
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div
+                className="editor-container overflow-hidden border border-border"
+                style={{
+                  height: "400px",
+                  borderRadius: "4px",
+                }}
+              >
+                <MonacoEditor
+                  height="400px"
+                  defaultLanguage="solidity"
+                  theme="vs-dark"
+                  value={editorContent}
+                  onChange={(value) => setEditorContent(value || "")}
+                />
+              </div>
+              <button
+                onClick={handleSendCode}
+                className="mt-4 p-2 bg-slate-100 hover:bg-slate-50 text-black rounded flex items-center justify-center gap-2"
+                disabled={loading}
+              >
+                {loading ? (
+                  "Analyzing..."
+                ) : (
+                  <>
+                    <Shield className="h-4 w-4" />
+                    Analyze Code
+                  </>
+                )}
+              </button>
+            </CardContent>
+          </Card>
         </section>
 
         {/* Response Section */}
         {response && (
           <section className="mt-8">
-            <h2 className="text-2xl font-semibold mb-4">Response</h2>
-            <div className="p-4 border border-gray-300 rounded">
-              <div dangerouslySetInnerHTML={{ __html: response }} />{" "}
-              {/* Render response as HTML */}
-            </div>
+            <Card>
+              <CardHeader>
+                <CardTitle>Analysis Results</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div dangerouslySetInnerHTML={{ __html: response }} />
+              </CardContent>
+            </Card>
           </section>
         )}
       </main>
