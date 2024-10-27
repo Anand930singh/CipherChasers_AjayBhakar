@@ -12,7 +12,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
-import { AlertTriangle, Bug, Lock, Shield, Code2 } from "lucide-react";
+import { AlertTriangle, Bug, Shield, Code2 } from "lucide-react";
 
 // Dynamically import the Monaco Editor to avoid SSR issues
 const MonacoEditor = dynamic(() => import("@monaco-editor/react"), {
@@ -108,20 +108,49 @@ const vulnerableCodeExamples = [
 ];
 
 function Page() {
+  const [language, setLanguage] = useState("solidity");
   const [editorContent, setEditorContent] = useState(
-    "// Start typing your Solidity code here"
+    language === "solidity"
+      ? "// Start typing your Solidity code here"
+      : "// Start typing your Move code here"
   );
   const [response, setResponse] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const getHeroContent = (lang: string) => {
+    if (lang === "solidity") {
+      return {
+        title: "Welcome to the Solidity Smart Contract Analyzer",
+        description:
+          "Analyze vulnerabilities in your Solidity smart contracts using our advanced Ethereum-focused analysis tools.",
+      };
+    }
+    return {
+      title: "Welcome to the Move Smart Contract Analyzer",
+      description:
+        "Analyze vulnerabilities in your Move smart contracts using our advanced Aptos-focused analysis tools.",
+    };
+  };
+
+  const handleLanguageChange = (event: any) => {
+    const value = event.target.value;
+    setLanguage(value);
+    setEditorContent(
+      value === "solidity"
+        ? "// Start typing your Solidity code here"
+        : "// Start typing your Move code here"
+    );
+  };
   const [selectedExample, setSelectedExample] = useState(null);
 
   const handleSendCode = async () => {
     setLoading(true);
     try {
       const prompt = `
+        Language: ${language.toUpperCase()}
         Code: 
-        ${editorContent},
-        Analyze the give solidity code and find vulnerabilities and displayed vulnerabilities in HTML and inline CSS. I need HTML code only no any other text and make the UI asthetically pleasing and remember black is used as backgrond in UI.
+        ${editorContent}
+        Analyze the given ${language} code and find vulnerabilities. Display vulnerabilities in HTML and inline CSS. I need HTML code only, if possible add small part of code having vulnerabilities, no other text, and make the UI aesthetically pleasing with a black background.
       `;
       const response = await fetch("/api/gemini", {
         method: "POST",
@@ -148,6 +177,9 @@ function Page() {
     }
   };
 
+  // Get hero content based on selected language
+  const heroContent = getHeroContent(language);
+
   const loadExample = (example) => {
     setSelectedExample(example);
     setEditorContent(example.code);
@@ -158,12 +190,11 @@ function Page() {
       <main className="flex-1 p-6 transition-all duration-300 ease-in-out md:mr-0">
         {/* Hero Section */}
         <section className="mb-8">
-          <h1 className="text-3xl font-bold mb-4">
-            Smart Contract Vulnerability Scanner
+          <h1 className="text-3xl font-bold mb-4 transition-all duration-300">
+            {heroContent.title}
           </h1>
-          <p className="text-lg mb-4">
-            Learn about common smart contract vulnerabilities through examples
-            and analyze your own code.
+          <p className="text-lg mb-4 transition-all duration-300">
+            {heroContent.description}
           </p>
         </section>
 
@@ -249,64 +280,67 @@ function Page() {
           </Card>
         </section>
 
-        {/* Monaco Editor Section */}
+        {/* Code Editor Section with Language Selector */}
         <section className="mt-8">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Lock className="h-6 w-6 text-blue-500" />
-                Code Analysis
-              </CardTitle>
-              <CardDescription>
-                Paste your Solidity code or use an example from above to analyze
-                for vulnerabilities
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div
-                className="editor-container overflow-hidden border border-border"
-                style={{
-                  height: "400px",
-                  borderRadius: "4px",
-                }}
-              >
-                <MonacoEditor
-                  height="400px"
-                  defaultLanguage="solidity"
-                  theme="vs-dark"
-                  value={editorContent}
-                  onChange={(value) => setEditorContent(value || "")}
-                />
-              </div>
-              <button
-                onClick={handleSendCode}
-                className="mt-4 p-2 bg-slate-100 hover:bg-slate-50 text-black rounded flex items-center justify-center gap-2"
-                disabled={loading}
-              >
-                {loading ? (
-                  "Analyzing..."
-                ) : (
-                  <>
-                    <Shield className="h-4 w-4" />
-                    Analyze Code
-                  </>
-                )}
-              </button>
-            </CardContent>
-          </Card>
+          <h2 className="text-2xl font-semibold mb-4">Code Editor</h2>
+
+          {/* Language Selector */}
+          <div className="mb-2">
+            <select
+              value={language}
+              onChange={handleLanguageChange}
+              className="w-40 p-2 rounded bg-gray-800 text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              style={{
+                appearance: "none",
+                backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='white'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,
+                backgroundRepeat: "no-repeat",
+                backgroundPosition: "right 0.5rem center",
+                backgroundSize: "1.5em 1.5em",
+                paddingRight: "2.5rem",
+              }}
+            >
+              <option value="solidity">Solidity</option>
+              <option value="move">Move (Aptos)</option>
+            </select>
+          </div>
+
+          {/* Editor Container */}
+          <div
+            className="editor-container overflow-hidden border border-gray-700 rounded-md"
+            style={{
+              height: "400px",
+            }}
+          >
+            <MonacoEditor
+              height="400px"
+              defaultLanguage={language}
+              theme="vs-dark"
+              value={editorContent}
+              onChange={(value) => setEditorContent(value || "")}
+              options={{
+                minimap: { enabled: false },
+                fontSize: 14,
+                wordWrap: "on",
+                automaticLayout: true,
+              }}
+            />
+          </div>
+          <button
+            onClick={handleSendCode}
+            className="mt-4 p-2 bg-blue-600 hover:bg-blue-700 text-white rounded transition-colors duration-200"
+            disabled={loading}
+          >
+            {loading ? "Analyzing..." : "Analyze Code"}
+          </button>
         </section>
 
         {/* Response Section */}
         {response && (
           <section className="mt-8">
-            <Card>
-              <CardHeader>
-                <CardTitle>Analysis Results</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div dangerouslySetInnerHTML={{ __html: response }} />
-              </CardContent>
-            </Card>
+            <h2 className="text-2xl font-semibold mb-4">Analysis Results</h2>
+            <div className="p-4 border border-gray-700 rounded bg-card">
+              <div dangerouslySetInnerHTML={{ __html: response }} />
+            </div>
           </section>
         )}
       </main>
