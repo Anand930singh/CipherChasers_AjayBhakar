@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
-import MintButton from "./MintButton";
+// import MintButton from "./MintButton";
 
 export default function Test(props) {
   const [selectedAnswers, setSelectedAnswers] = useState<
@@ -297,7 +297,7 @@ export default function Test(props) {
               {/* <Button className="flex items-center gap-2 bg-blue-500 hover:bg-blue-400 text-white rounded">
                 Mint Certificate
               </Button> */}
-              <MintButton />
+              {/* <MintButton /> */}
               <Button
                 onClick={downloadCertificate}
                 className="flex items-center gap-2 bg-slate-100 hover:bg-slate-50 rounded"

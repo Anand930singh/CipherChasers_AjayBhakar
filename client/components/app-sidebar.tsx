@@ -92,16 +92,7 @@ const data = {
       icon: Bot,
       isActive: false,
       items: [
-        {
-          title: "VM Configuration",
-          url: "/lab-environment/vm-configuration",
-        },
-        { title: "Docker Setup", url: "/lab-environment/docker-setup" },
         { title: "AMI Instances", url: "/lab-environment/ami-instances" },
-        {
-          title: "Custom Configurations",
-          url: "/lab-environment/custom-configurations",
-        },
       ],
     },
     {
@@ -110,9 +101,9 @@ const data = {
       icon: BookOpen,
       isActive: false,
       items: [
-        { title: "Type 1", url: "/investigate/type-1" },
-        { title: "Type 2", url: "/investigate/type-1" },
-        { title: "Type 3", url: "/investigate/type-1" },
+        { title: "Rug Pull", url: "/investigate/rug-pull" },
+        { title: "Malicious Contract", url: "/investigate/thread-breakdown" },
+        // { title: "Type 3", url: "/investigate/type-1" },
       ],
     },
     // {
