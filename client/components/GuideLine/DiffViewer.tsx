@@ -11,24 +11,29 @@ const DiffViewer = () => {
   const codeDiffs = [
     {
       id: 1,
-      correct: "function calculateSum(a, b) {\n  return a + b;\n}",
-      wrong: "function calculateSum(a, b) {\n  return a - b;\n}",
-      explanation: "The function should add the parameters, not subtract them.",
+      correct: "All entries are marked as Rug Pulls or Scams.",
+      wrong:
+        "There is no Evidence to classify any project in the dataset as valid unless additional info suggests recovery or continuity.",
+      explanation:
+        "The Scam tag confirms it should be classified as vulnerable.",
     },
     {
       id: 2,
       correct:
-        "for (let i = 0; i < arr.length; i++) {\n  console.log(arr[i]);\n}",
+        "It has a history of fraudulent activities, including using a Ponzi-like scheme that led to significant investor losses",
       wrong:
-        "for (let i = 0; i <= arr.length; i++) {\n  console.log(arr[i]);\n}",
-      explanation: "Using <= can lead to array index out of bounds.",
+        "The project Thodex, marked as a Rug Pull, should not be considered valid or legitimate, as this tag indicates it abandoned investors. Misclassifying it as valid would misrepresent the project’s clear involvement in fraud.",
+      explanation:
+        "A project labeled as a rug pull implies fraudulent actions where developers withdrew funds.",
     },
     {
       id: 3,
-      correct: "if (value === undefined) {\n  return defaultValue;\n}",
-      wrong: "if (value == undefined) {\n  return defaultValue;\n}",
+      correct:
+        "assuming the absence of valid data aligns with the dataset’s purpose, as all projects listed experienced fraudulent activities.",
+      wrong:
+        "The Scam designation confirms it engaged in deceptive practices, and assuming otherwise would ignore the fraud record documented in the dataset",
       explanation:
-        "Strict equality (===) should be used instead of loose equality (==).",
+        "Projects labeled as Scam in this dataset have been flagged for fraudulent behavior, meaning they actively deceived investors. Without any recovery or proof of investor protection, they cannot be assumed valid.",
     },
   ];
 

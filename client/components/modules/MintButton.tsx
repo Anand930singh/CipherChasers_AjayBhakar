@@ -7,16 +7,68 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Loader2, ExternalLink } from "lucide-react";
 import contractABI from "@/data/abi.json";
 
+// Add type declarations for window.ethereum
+declare global {
+  interface Window {
+    ethereum?: {
+      request: (args: { method: string; params?: any[] }) => Promise<any>;
+      on: (event: string, callback: (params: any) => void) => void;
+      removeListener: (event: string, callback: (params: any) => void) => void;
+    };
+  }
+}
+
 const MintButton = () => {
-  const [status, setStatus] = useState("idle");
-  const [error, setError] = useState("");
-  const [txHash, setTxHash] = useState("");
+  const [status, setStatus] = useState<
+    "idle" | "connecting" | "minting" | "success" | "error"
+  >("idle");
+  const [error, setError] = useState<string>("");
+  const [txHash, setTxHash] = useState<string>("");
 
   const contractAddress = "0x84f46ebCe18EF189919868eb759ad7a811cC69B7";
 
-  // ... (keep networkConfig and switchToAmoyNetwork the same)
+  // Add the missing switchToAmoyNetwork function
+  const switchToAmoyNetwork = async (): Promise<void> => {
+    if (!window.ethereum) {
+      throw new Error("MetaMask is not installed");
+    }
 
-  const mintNFT = async () => {
+    try {
+      // Try to switch to Amoy network
+      await window.ethereum.request({
+        method: "wallet_switchEthereumChain",
+        params: [{ chainId: "0x13882" }], // 80002 in hex
+      });
+    } catch (switchError: any) {
+      // If the network doesn't exist, add it
+      if (switchError.code === 4902) {
+        try {
+          await window.ethereum.request({
+            method: "wallet_addEthereumChain",
+            params: [
+              {
+                chainId: "0x13882", // 80002 in hex
+                chainName: "Polygon Amoy",
+                nativeCurrency: {
+                  name: "MATIC",
+                  symbol: "MATIC",
+                  decimals: 18,
+                },
+                rpcUrls: ["https://rpc-amoy.polygon.technology"],
+                blockExplorerUrls: ["https://amoy.polygonscan.com"],
+              },
+            ],
+          });
+        } catch (addError) {
+          throw new Error("Failed to add Amoy network");
+        }
+      } else {
+        throw new Error("Failed to switch to Amoy network");
+      }
+    }
+  };
+
+  const mintNFT = async (): Promise<void> => {
     if (!window?.ethereum) {
       setError("Please install MetaMask to mint NFTs");
       setStatus("error");
@@ -74,7 +126,7 @@ const MintButton = () => {
       );
 
       // Prepare the mint transaction
-      const mintTx = {
+      const mintTx: ethers.providers.TransactionRequest = {
         to: contractAddress,
         from: address,
         gasLimit: ethers.utils.hexlify(500000), // Increased gas limit
@@ -103,7 +155,7 @@ const MintButton = () => {
       const receipt = await tx.wait();
       console.log("Transaction confirmed:", receipt);
       setStatus("success");
-    } catch (err) {
+    } catch (err: any) {
       console.error("Minting error:", err);
 
       // More detailed error handling
@@ -125,11 +177,13 @@ const MintButton = () => {
   };
 
   return (
-    <div className="flex flex-col items-center gap-4 w-full max-w-md mx-auto p-4">
+    <div className="flex flex-col items-center">
       <Button
         onClick={mintNFT}
         disabled={status === "connecting" || status === "minting"}
-        className="w-full h-12 text-lg font-semibold"
+        className={`${
+          status === "success" || (status === "error" && "hidden")
+        } w-full bg-slate-100 rounded text-black hover:text-black hover:bg-slate-50`}
       >
         {status === "connecting" && (
           <>
@@ -144,20 +198,20 @@ const MintButton = () => {
           </>
         )}
         {status === "idle" && "Mint NFT"}
-        {status === "success" && "Mint Another"}
-        {status === "error" && "Try Again"}
+        {/* {status === "success" && "Mint Another"}
+        {status === "error" && "Try Again"} */}
       </Button>
 
-      {error && (
+      {/* {error && (
         <Alert variant="destructive" className="w-full">
           <AlertDescription>{error}</AlertDescription>
         </Alert>
-      )}
+      )} */}
 
       {txHash && (
-        <Alert className="w-full">
+        <Alert className="w-full bg-slate-100 hover:bg-slate-50 text-black">
           <AlertDescription className="flex items-center gap-2">
-            <span>View on Explorer</span>
+            <span className="font-semibold">View on Explorer</span>
             <a
               href={`https://amoy.polygonscan.com/tx/${txHash}`}
               target="_blank"
