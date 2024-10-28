@@ -15,6 +15,17 @@ Our platform provides an interactive learning experience combining theoretical k
 - 🔗 IPFS-based Certificate Storage
 - ✅ Interactive Quizzes and Assessments
 
+### Live Demo Youtube Link
+Youtubbe - https://youtu.be/DUM17KVbV8M
+
+### Some Screen Shots
+![11](https://github.com/user-attachments/assets/92024ee7-70c1-45c9-b589-b8abee123c14)
+![12](https://github.com/user-attachments/assets/a05a8fe6-b798-47a8-8465-d19784619b9f)
+![13](https://github.com/user-attachments/assets/f60ec232-68b4-40ad-a143-cd2026f1aa42)
+![14](https://github.com/user-attachments/assets/c8803dea-5ef6-4dd6-ab11-2d9aed7e0939)
+![15](https://github.com/user-attachments/assets/33053ba2-7f6b-42e9-806d-61c65d491e32)
+
+
 ## 🏗️ Architecture
 
 ```
